@@ -1,42 +1,76 @@
 # eastcoach2
 
-This project was created with [Better-T-Stack](https://github.com/AmanVarshney01/create-better-t-stack), a modern TypeScript stack that combines React, TanStack Start, and more.
+A modern web application built with TanStack Start, TypeScript, and Tailwind CSS.
 
-## Features
+## Tech Stack
 
-- **TypeScript** - For type safety and improved developer experience
-- **TanStack Start** - SSR framework with TanStack Router
-- **TailwindCSS** - Utility-first CSS for rapid UI development
-- **shadcn/ui** - Reusable UI components
-- **Turborepo** - Optimized monorepo build system
+- **Framework:** TanStack Start (SSR with TanStack Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS v4
+- **UI Components:** shadcn/ui (Base UI)
+- **State Management:** TanStack Query
+- **Form Handling:** TanStack Form with Zod validation
+- **Monorepo:** Turborepo
+- **Package Manager:** Bun
+- **Code Quality:** Ultracite (Biome-based)
 
 ## Getting Started
 
-First, install the dependencies:
+Install dependencies:
 
 ```bash
 bun install
 ```
 
-Then, run the development server:
+Run the development server:
 
 ```bash
 bun run dev
 ```
 
-Open [http://localhost:3001](http://localhost:3001) in your browser to see the web application.
+Open [http://localhost:3001](http://localhost:3001) to view the application.
+
+## Available Scripts
+
+| Command | Description |
+|---------|-------------|
+| `bun run dev` | Start all applications in development mode |
+| `bun run build` | Build all applications for production |
+| `bun run dev:web` | Start only the web application |
+| `bun run check-types` | Check TypeScript types across all apps |
+| `bun x ultracite check` | Check code quality issues |
+| `bun x ultracite fix` | Format and auto-fix code issues |
 
 ## Project Structure
 
 ```
 eastcoach2/
 ├── apps/
-│   ├── web/         # Frontend application (React + TanStack Start)
+│   └── web/              # Frontend application (TanStack Start)
+│       ├── src/
+│       │   ├── components/
+│       │   │   └── ui/   # shadcn/ui components
+│       │   ├── routes/   # TanStack Router file-based routes
+│       │   └── lib/      # Utilities
+│       └── public/
+├── packages/
+│   ├── config/           # Shared configuration
+│   └── env/              # Shared environment variables
+├── biome.json            # Ultracite linting rules
+└── turbo.json            # Turborepo configuration
 ```
 
-## Available Scripts
+## Code Standards
 
-- `bun run dev`: Start all applications in development mode
-- `bun run build`: Build all applications
-- `bun run dev:web`: Start only the web application
-- `bun run check-types`: Check TypeScript types across all apps
+This project follows **Ultracite** code standards. See `.claude/CLAUDE.md` for details.
+
+Key conventions:
+- Use explicit types for function parameters and return values
+- Prefer `const` over `let`, never use `var`
+- Use async/await instead of promise chains
+- Function components over class components
+- Remove `console.log` and `debugger` from production code
+
+## License
+
+Private project.
