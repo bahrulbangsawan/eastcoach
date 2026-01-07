@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "prebuild": "mkdir -p dist/server && touch dist/server/server.js",
     "build": "vite build",
     "serve": "vite preview",
     "dev": "vite dev",

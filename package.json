@@ -20,7 +20,8 @@
     "dev:native": "turbo -F native dev",
     "dev:web": "turbo -F web dev",
     "preview": "turbo -F web preview",
-    "deploy": "turbo -F web deploy"
+    "deploy": "turbo -F web deploy",
+    "deploy:cf": "cd apps/web && npx wrangler deploy"
   },
   "dependencies": {
     "@eastcoach2/env": "workspace:*",

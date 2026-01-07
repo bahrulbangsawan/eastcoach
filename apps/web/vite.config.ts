@@ -5,17 +5,21 @@ import { existsSync } from "node:fs";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
-// Only include Cloudflare plugin if dist exists (avoids chicken-and-egg problem)
-const useCloudflare = existsSync("./dist/server/server.js");
+export default defineConfig(({ command }) => {
+  // Always include Cloudflare plugin for build, but for dev only if dist exists
+  // This avoids the chicken-and-egg problem during local development
+  const useCloudflare =
+    command === "build" || existsSync("./dist/server/server.js");
 
-export default defineConfig({
-  plugins: [
-    tsconfigPaths(),
-    useCloudflare && cloudflare({ viteEnvironment: { name: "ssr" } }),
-    tanstackStart(),
-    viteReact(),
-  ].filter(Boolean),
-  server: {
-    port: 3001,
-  },
+  return {
+    plugins: [
+      tsconfigPaths(),
+      useCloudflare && cloudflare({ viteEnvironment: { name: "ssr" } }),
+      tanstackStart(),
+      viteReact(),
+    ].filter(Boolean),
+    server: {
+      port: 3001,
+    },
+  };
 });
