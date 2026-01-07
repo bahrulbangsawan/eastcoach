@@ -1,38 +1,65 @@
-import { useState } from "react"
-import { Menu } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { Container } from "./Container"
+import { Menu, X } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 const navItems = [
-  { name: "Home", href: "#" },
-  { name: "Pricing", href: "#services" },
-  { name: "About", href: "#about" },
-  { name: "Contact", href: "#join" },
-]
+  { name: "Tentang", href: "#about" },
+  { name: "Layanan", href: "#services" },
+  { name: "Kontak", href: "#testimonials" },
+];
+
+const WA_LINK = "https://wa.me/6281376979947";
+
+// Desktop breakpoint (lg = 1024px in Tailwind)
+const DESKTOP_BREAKPOINT = 1024;
 
 export function Navbar() {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Auto-close mobile menu when resizing to desktop
+  const handleResize = useCallback(() => {
+    if (window.innerWidth >= DESKTOP_BREAKPOINT && isOpen) {
+      setIsOpen(false);
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [handleResize]);
+
+  const handleNavClick = () => {
+    setIsOpen(false);
+  };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <Container>
-        <div className="flex h-16 items-center justify-between">
-          <div className="flex items-center pl-8">
-            <a className="flex items-center space-x-2" href="#">
-              <img
-                src="/logo.png"
-                alt="East Coach Logo"
-                className="h-10 w-auto"
-              />
-            </a>
-          </div>
+    <header className="fixed top-0 right-0 left-0 z-50 w-full bg-dark/95 backdrop-blur-md">
+      <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8 lg:py-4">
+        <div className="flex items-center justify-between">
+          {/* Logo - High priority for above-fold */}
+          <a className="flex shrink-0 items-center" href="/">
+            <img
+              alt="East Coach"
+              className="h-8 w-auto sm:h-9 lg:h-10"
+              decoding="sync"
+              fetchPriority="high"
+              height={40}
+              src="https://files.eastcoach.club/logo/eastcoach-logo.webp"
+              width={140}
+            />
+          </a>
 
           {/* Desktop Navigation */}
-          <nav className="hidden items-center space-x-8 md:flex flex-1 justify-center">
+          <nav className="hidden items-center gap-8 lg:flex">
             {navItems.map((item) => (
               <a
-                className="font-medium text-sm tracking-wide uppercase transition-all duration-300 hover:text-primary hover:scale-105"
+                className="text-sm text-white transition-colors hover:text-lime"
                 href={item.href}
                 key={item.name}
               >
@@ -41,44 +68,89 @@ export function Navbar() {
             ))}
           </nav>
 
-          <div className="hidden items-center space-x-4 md:flex">
-            <Button asChild className="rounded-full px-6 py-2 font-semibold tracking-wide transition-all duration-300 hover:scale-105 hover:shadow-lg" variant="default">
-              <a href="#join">Join Member</a>
+          {/* Desktop CTA Button */}
+          <div className="hidden items-center lg:flex">
+            <Button
+              asChild
+              className="h-9 rounded-md bg-lime px-5 text-dark text-sm"
+              size="sm"
+              variant="accent"
+            >
+              <a href={WA_LINK} rel="noopener noreferrer" target="_blank">
+                Mulai Sekarang
+              </a>
             </Button>
           </div>
 
-          {/* Mobile Navigation */}
-          <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild className="md:hidden">
-              <Button size="icon" variant="ghost">
-                <Menu className="h-5 w-5" />
-                <span className="sr-only">Toggle menu</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent className="w-[300px] sm:w-[400px]" side="right">
-              <nav className="mt-8 flex flex-col space-y-6">
-                {navItems.map((item) => (
-                  <a
-                    className="font-medium text-base tracking-wide uppercase transition-all duration-300 hover:text-primary hover:translate-x-1"
-                    href={item.href}
-                    key={item.name}
-                    onClick={() => setIsOpen(false)}
+          {/* Mobile Menu Toggle - Only visible on mobile */}
+          <div className="lg:hidden">
+            <Sheet onOpenChange={setIsOpen} open={isOpen}>
+              <SheetTrigger
+                aria-label="Buka menu navigasi"
+                className="flex size-12 items-center justify-center rounded-xl border border-white/20 bg-white/10 transition-colors hover:bg-white/15 active:bg-white/20"
+              >
+                <Menu className="size-7 text-white" />
+              </SheetTrigger>
+
+              <SheetContent className="border-none" side="right">
+                {/* Mobile Menu Header */}
+                <div className="flex items-center justify-between border-white/10 border-b px-6 py-5">
+                  <img
+                    alt="East Coach"
+                    className="h-9 w-auto"
+                    decoding="async"
+                    height={36}
+                    loading="lazy"
+                    src="https://files.eastcoach.club/logo/eastcoach-logo.webp"
+                    width={126}
+                  />
+                  <SheetClose
+                    aria-label="Tutup menu"
+                    className="flex size-11 items-center justify-center rounded-xl border border-white/20 bg-white/10 transition-colors hover:bg-white/15 active:bg-white/20"
                   >
-                    {item.name}
-                  </a>
-                ))}
-                <div className="border-t pt-6">
-                  <Button asChild className="w-full rounded-full font-semibold tracking-wide uppercase">
-                    <a href="#join" onClick={() => setIsOpen(false)}>
-                      Join Member
-                    </a>
-                  </Button>
+                    <X className="size-6 text-white" />
+                  </SheetClose>
                 </div>
-              </nav>
-            </SheetContent>
-          </Sheet>
+
+                {/* Mobile Navigation Links */}
+                <nav className="flex flex-1 flex-col px-6 py-8">
+                  <div className="space-y-2">
+                    {navItems.map((item) => (
+                      <a
+                        className="flex items-center rounded-xl bg-white/5 px-5 py-4 font-medium text-lg text-white transition-colors hover:bg-white/10 active:bg-white/15"
+                        href={item.href}
+                        key={item.name}
+                        onClick={handleNavClick}
+                      >
+                        {item.name}
+                      </a>
+                    ))}
+                  </div>
+
+                  {/* Mobile CTA Button */}
+                  <div className="mt-auto pt-8">
+                    <Button
+                      asChild
+                      className="h-14 w-full rounded-xl font-semibold text-lg"
+                      size="lg"
+                      variant="accent"
+                    >
+                      <a
+                        href={WA_LINK}
+                        onClick={handleNavClick}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        Mulai Sekarang
+                      </a>
+                    </Button>
+                  </div>
+                </nav>
+              </SheetContent>
+            </Sheet>
+          </div>
         </div>
-      </Container>
+      </div>
     </header>
-  )
+  );
 }

@@ -3,57 +3,53 @@ import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { AboutUs } from "@/components/marketing/AboutUs";
 import { Hero } from "@/components/marketing/Hero";
-import { JoinUs } from "@/components/marketing/JoinUs";
-import { OurCoaches } from "@/components/marketing/OurCoaches";
 import { OurServices } from "@/components/marketing/OurServices";
 import { Testimonials } from "@/components/marketing/Testimonials";
 import { WhyChooseUs } from "@/components/marketing/WhyChooseUs";
 
 export const Route = createFileRoute("/")({
   component: HomeComponent,
-  meta: () => [
-    {
-      title: "East Coach | Professional Tennis Coaching in Makassar",
-    },
-    {
-      name: "description",
-      content:
-        "Premier tennis coaching services in Makassar. Expert coaches, personalized training programs for all skill levels. Book your first session today.",
-    },
-    {
-      property: "og:title",
-      content: "East Coach | Professional Tennis Coaching in Makassar",
-    },
-    {
-      property: "og:type",
-      content: "website",
-    },
-    {
-      property: "og:url",
-      content: "https://eastcoach.id/",
-    },
-    {
-      property: "og:image",
-      content: "https://eastcoach.id/og-image.jpg",
-    },
-    {
-      property: "og:description",
-      content:
-        "Premier tennis coaching services in Makassar. Expert coaches, personalized training programs for all skill levels.",
-    },
-    {
-      property: "og:locale",
-      content: "id_ID",
-    },
-    {
-      name: "twitter:card",
-      content: "summary_large_image",
-    },
-    {
-      name: "viewport",
-      content: "width=device-width, initial-scale=1",
-    },
-  ],
+  head: () => ({
+    meta: [
+      {
+        title: "East Coach | Professional Tennis Coaching in Makassar",
+      },
+      {
+        name: "description",
+        content:
+          "Premier tennis coaching services in Makassar. Expert coaches, personalized training programs for all skill levels. Book your first session today.",
+      },
+      {
+        property: "og:title",
+        content: "East Coach | Professional Tennis Coaching in Makassar",
+      },
+      {
+        property: "og:type",
+        content: "website",
+      },
+      {
+        property: "og:url",
+        content: "https://eastcoach.id/",
+      },
+      {
+        property: "og:image",
+        content: "https://eastcoach.id/og-image.jpg",
+      },
+      {
+        property: "og:description",
+        content:
+          "Premier tennis coaching services in Makassar. Expert coaches, personalized training programs for all skill levels.",
+      },
+      {
+        property: "og:locale",
+        content: "id_ID",
+      },
+      {
+        name: "twitter:card",
+        content: "summary_large_image",
+      },
+    ],
+  }),
 });
 
 function HomeComponent() {
@@ -174,9 +170,7 @@ function HomeComponent() {
           <OurServices />
           <AboutUs />
           <WhyChooseUs />
-          <OurCoaches />
           <Testimonials />
-          <JoinUs />
         </main>
         <Footer />
       </div>

@@ -1,20 +1,42 @@
+import type { VariantProps } from "class-variance-authority";
+import { cva } from "class-variance-authority";
 import type * as React from "react";
 
 import { cn } from "@/lib/utils";
 
-function Card({
-  className,
-  size = "default",
-  ...props
-}: React.ComponentProps<"div"> & { size?: "default" | "sm" }) {
+const cardVariants = cva(
+  "group/card flex flex-col overflow-hidden text-card-foreground",
+  {
+    variants: {
+      variant: {
+        default: "bg-card ring-1 ring-foreground/10",
+        glass: "border border-white/10 bg-white/[0.13] backdrop-blur-[6.8px]",
+        image: "relative bg-center bg-cover bg-no-repeat",
+        dark: "bg-dark text-white",
+        lime: "bg-lime text-dark",
+      },
+      size: {
+        default: "gap-4 rounded-xl py-4 text-sm/relaxed",
+        sm: "gap-2 rounded-lg py-3 text-xs/relaxed",
+        lg: "gap-6 rounded-2xl py-6 text-base/relaxed",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  }
+);
+
+type CardProps = React.ComponentProps<"div"> &
+  VariantProps<typeof cardVariants>;
+
+function Card({ className, variant, size, ...props }: CardProps) {
   return (
     <div
-      className={cn(
-        "group/card flex flex-col gap-4 overflow-hidden rounded-none bg-card py-4 text-card-foreground text-xs/relaxed ring-1 ring-foreground/10 has-[>img:first-child]:pt-0 has-data-[slot=card-footer]:pb-0 data-[size=sm]:gap-2 data-[size=sm]:py-3 data-[size=sm]:has-data-[slot=card-footer]:pb-0 *:[img:first-child]:rounded-none *:[img:last-child]:rounded-none",
-        className
-      )}
-      data-size={size}
+      className={cn(cardVariants({ variant, size }), className)}
       data-slot="card"
+      data-variant={variant}
       {...props}
     />
   );
@@ -24,7 +46,7 @@ function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       className={cn(
-        "group/card-header @container/card-header grid auto-rows-min items-start gap-1 rounded-none px-4 has-data-[slot=card-action]:grid-cols-[1fr_auto] has-data-[slot=card-description]:grid-rows-[auto_auto] group-data-[size=sm]/card:px-3 [.border-b]:pb-4 group-data-[size=sm]/card:[.border-b]:pb-3",
+        "group/card-header @container/card-header grid auto-rows-min items-start gap-1.5 px-5 has-data-[slot=card-action]:grid-cols-[1fr_auto] has-data-[slot=card-description]:grid-rows-[auto_auto] group-data-[variant=glass]/card:px-6 [.border-b]:pb-4",
         className
       )}
       data-slot="card-header"
@@ -36,10 +58,7 @@ function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
 function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
-      className={cn(
-        "font-medium text-sm group-data-[size=sm]/card:text-sm",
-        className
-      )}
+      className={cn("font-semibold text-lg leading-tight", className)}
       data-slot="card-title"
       {...props}
     />
@@ -49,7 +68,7 @@ function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
 function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
-      className={cn("text-muted-foreground text-xs/relaxed", className)}
+      className={cn("text-muted-foreground text-sm/relaxed", className)}
       data-slot="card-description"
       {...props}
     />
@@ -72,7 +91,7 @@ function CardAction({ className, ...props }: React.ComponentProps<"div">) {
 function CardContent({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
-      className={cn("px-4 group-data-[size=sm]/card:px-3", className)}
+      className={cn("px-5 group-data-[variant=glass]/card:px-6", className)}
       data-slot="card-content"
       {...props}
     />
@@ -83,10 +102,23 @@ function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       className={cn(
-        "flex items-center rounded-none border-t p-4 group-data-[size=sm]/card:p-3",
+        "mt-auto flex items-center border-border/50 border-t p-5",
         className
       )}
       data-slot="card-footer"
+      {...props}
+    />
+  );
+}
+
+function CardOverlay({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      className={cn(
+        "absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent",
+        className
+      )}
+      data-slot="card-overlay"
       {...props}
     />
   );
@@ -100,4 +132,6 @@ export {
   CardAction,
   CardDescription,
   CardContent,
+  CardOverlay,
+  cardVariants,
 };
