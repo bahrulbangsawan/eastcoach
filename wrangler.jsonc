@@ -3,7 +3,7 @@
   "name": "eastcoach",
   "compatibility_date": "2025-01-07",
   "compatibility_flags": ["nodejs_compat"],
-  "main": "apps/web/dist/server/server.js",
+  "main": "apps/web/dist/server/index.js",
   "assets": {
     "directory": "apps/web/dist/client"
   }
