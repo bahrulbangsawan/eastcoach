@@ -8,6 +8,7 @@ import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { useEffect } from "react";
 
 import { WhatsAppButton } from "@/components/layout/whatsapp-button";
+import { NotFound } from "@/components/not-found";
 import { Toaster } from "@/components/ui/sonner";
 import appCss from "@/index.css?url";
 
@@ -32,12 +33,28 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
         name: "msapplication-TileColor",
         content: "#c1ff00",
       },
+      {
+        name: "color-scheme",
+        content: "light only",
+      },
     ],
     links: [
       // Stylesheet - must be first to prevent FOUC
       {
         rel: "stylesheet",
         href: appCss,
+      },
+      // Preload critical above-fold image
+      {
+        rel: "preload",
+        as: "image",
+        href: "https://files.eastcoach.club/logo/eastcoach-logo.webp",
+        fetchPriority: "high",
+      },
+      // Canonical URL for SEO
+      {
+        rel: "canonical",
+        href: "https://eastcoach.club/",
       },
       // Primary favicon for browsers (favicon.ico contains multiple sizes including 48x48)
       {
@@ -98,6 +115,7 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
   }),
 
   component: RootDocument,
+  notFoundComponent: NotFound,
 });
 
 const ACTIVE_FAVICON = "https://files.eastcoach.club/logo/favicon.ico";
@@ -132,10 +150,14 @@ function RootDocument() {
         {/* Minimal critical CSS - only CSS variables and body basics */}
         <style>
           {`:root {
+            color-scheme: light only;
             --lime: oklch(0.91 0.22 115);
             --dark: oklch(0.15 0.005 0);
             --background: oklch(1 0 0);
             --foreground: oklch(0.15 0.005 0);
+          }
+          html {
+            color-scheme: light only;
           }
           body {
             background: oklch(1 0 0);

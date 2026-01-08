@@ -28,8 +28,10 @@ export function AboutUs() {
                 alt="East Coach tennis player"
                 className="h-full w-full object-cover"
                 decoding="async"
+                height={300}
                 loading="lazy"
                 src="https://files.eastcoach.club/content/eastcoach-player-1.webp"
+                width={380}
               />
             </div>
 

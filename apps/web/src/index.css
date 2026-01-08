@@ -5,6 +5,9 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
+  /* Force light mode only - prevent browser/OS dark mode override */
+  color-scheme: light only;
+
   /* Courtside Brand Colors */
   --lime: oklch(0.91 0.22 115);
   --dark: oklch(0.15 0.005 0);
@@ -159,6 +162,7 @@
   }
   html {
     @apply font-sans scroll-smooth;
+    color-scheme: light only;
   }
 }
 

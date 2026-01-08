@@ -19,6 +19,7 @@ export const Route = createFileRoute("/")({
         content:
           "Premier tennis coaching services in Makassar. Expert coaches, personalized training programs for all skill levels. Book your first session today.",
       },
+      // Open Graph tags
       {
         property: "og:title",
         content: "East Coach | Professional Tennis Coaching in Makassar",
@@ -29,11 +30,27 @@ export const Route = createFileRoute("/")({
       },
       {
         property: "og:url",
-        content: "https://eastcoach.id/",
+        content: "https://eastcoach.club/",
       },
       {
         property: "og:image",
-        content: "https://eastcoach.id/og-image.jpg",
+        content: "https://files.eastcoach.club/content/og-image.jpg",
+      },
+      {
+        property: "og:image:width",
+        content: "1200",
+      },
+      {
+        property: "og:image:height",
+        content: "630",
+      },
+      {
+        property: "og:image:type",
+        content: "image/jpeg",
+      },
+      {
+        property: "og:image:alt",
+        content: "East Coach Tennis Academy Makassar",
       },
       {
         property: "og:description",
@@ -45,6 +62,11 @@ export const Route = createFileRoute("/")({
         content: "id_ID",
       },
       {
+        property: "og:site_name",
+        content: "East Coach",
+      },
+      // Twitter Card
+      {
         name: "twitter:card",
         content: "summary_large_image",
       },
@@ -53,14 +75,70 @@ export const Route = createFileRoute("/")({
 });
 
 function HomeComponent() {
-  const jsonLd = {
+  // Organization schema - for brand knowledge panel
+  const organizationJsonLd = {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "@id": "https://eastcoach.id/#localbusiness",
+    "@type": "Organization",
+    "@id": "https://eastcoach.club/#organization",
+    name: "East Coach",
+    url: "https://eastcoach.club/",
+    logo: "https://files.eastcoach.club/logo/android-chrome-512x512.png",
+    image: "https://files.eastcoach.club/content/og-image.jpg",
+    description:
+      "Premier tennis coaching services in Makassar for all skill levels",
+    contactPoint: {
+      "@type": "ContactPoint",
+      telephone: "+6281376979947",
+      contactType: "customer service",
+      availableLanguage: ["Indonesian", "English"],
+    },
+  };
+
+  // WebSite schema - for site identity and search
+  const websiteJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "https://eastcoach.club/#website",
+    url: "https://eastcoach.club/",
     name: "East Coach",
     description:
       "Premier tennis coaching services in Makassar for all skill levels",
-    url: "https://eastcoach.id/",
+    publisher: {
+      "@id": "https://eastcoach.club/#organization",
+    },
+    inLanguage: "id-ID",
+  };
+
+  // WebPage schema - for page-level SEO
+  const webpageJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://eastcoach.club/#webpage",
+    url: "https://eastcoach.club/",
+    name: "East Coach | Professional Tennis Coaching in Makassar",
+    description:
+      "Premier tennis coaching services in Makassar. Expert coaches, personalized training programs for all skill levels.",
+    isPartOf: {
+      "@id": "https://eastcoach.club/#website",
+    },
+    about: {
+      "@id": "https://eastcoach.club/#organization",
+    },
+    primaryImageOfPage: "https://files.eastcoach.club/content/og-image.jpg",
+    inLanguage: "id-ID",
+  };
+
+  // LocalBusiness schema - for local SEO
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": "https://eastcoach.club/#localbusiness",
+    name: "East Coach",
+    description:
+      "Premier tennis coaching services in Makassar for all skill levels",
+    url: "https://eastcoach.club/",
+    telephone: "+6281376979947",
+    image: "https://files.eastcoach.club/content/og-image.jpg",
     address: {
       "@type": "PostalAddress",
       addressLocality: "Makassar",
@@ -95,7 +173,7 @@ function HomeComponent() {
         description:
           "Comprehensive tennis coaching for children ages 6-12, focusing on fundamental skills and hand-eye coordination",
         provider: {
-          "@id": "https://eastcoach.id/#localbusiness",
+          "@id": "https://eastcoach.club/#localbusiness",
         },
       },
       {
@@ -105,7 +183,7 @@ function HomeComponent() {
         description:
           "Advanced coaching for teenagers ages 13-17, developing technical skills and tactical awareness",
         provider: {
-          "@id": "https://eastcoach.id/#localbusiness",
+          "@id": "https://eastcoach.club/#localbusiness",
         },
       },
       {
@@ -115,7 +193,7 @@ function HomeComponent() {
         description:
           "Personalized training programs for adults of all skill levels, from beginners to experienced players",
         provider: {
-          "@id": "https://eastcoach.id/#localbusiness",
+          "@id": "https://eastcoach.club/#localbusiness",
         },
       },
       {
@@ -125,7 +203,7 @@ function HomeComponent() {
         description:
           "One-on-one coaching sessions with personalized attention to accelerate improvement",
         provider: {
-          "@id": "https://eastcoach.id/#localbusiness",
+          "@id": "https://eastcoach.club/#localbusiness",
         },
       },
       {
@@ -135,7 +213,7 @@ function HomeComponent() {
         description:
           "Small group training with players of similar skill levels in a fun and social environment",
         provider: {
-          "@id": "https://eastcoach.id/#localbusiness",
+          "@id": "https://eastcoach.club/#localbusiness",
         },
       },
       {
@@ -145,7 +223,7 @@ function HomeComponent() {
         description:
           "Specialized training for tournament players, focusing on match strategy and mental toughness",
         provider: {
-          "@id": "https://eastcoach.id/#localbusiness",
+          "@id": "https://eastcoach.club/#localbusiness",
         },
       },
     ],
@@ -153,10 +231,27 @@ function HomeComponent() {
 
   return (
     <>
+      {/* Organization Schema */}
+      <script
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        type="application/ld+json"
+      />
+      {/* WebSite Schema */}
+      <script
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        type="application/ld+json"
+      />
+      {/* WebPage Schema */}
+      <script
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webpageJsonLd) }}
+        type="application/ld+json"
+      />
+      {/* LocalBusiness Schema */}
       <script
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         type="application/ld+json"
       />
+      {/* Services Schema */}
       <script
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(servicesJsonLd),

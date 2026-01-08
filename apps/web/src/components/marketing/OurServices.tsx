@@ -66,8 +66,10 @@ function ServiceCard({ service }: ServiceCardProps) {
         alt={service.title}
         className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
         decoding="async"
+        height={340}
         loading="lazy"
         src={service.image}
+        width={400}
       />
 
       {/* Dark Overlay */}

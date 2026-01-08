@@ -5,12 +5,14 @@ interface LazyVideoProps {
   src: string;
   className?: string;
   priority?: "high" | "low";
+  poster?: string;
 }
 
 export function LazyVideo({
   src,
   className = "",
   priority = "low",
+  poster,
 }: LazyVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -35,7 +37,7 @@ export function LazyVideo({
   // Play/pause based on visibility
   useEffect(() => {
     const video = videoRef.current;
-    if (!video || !shouldLoad) return;
+    if (!(video && shouldLoad)) return;
 
     if (isInView) {
       video.play().catch(() => {
@@ -47,15 +49,16 @@ export function LazyVideo({
   }, [isInView, shouldLoad]);
 
   return (
-    <div ref={containerRef} className={className}>
+    <div className={className} ref={containerRef}>
       <video
-        ref={videoRef}
         autoPlay={priority === "high"}
         className="h-full w-full object-cover"
         loop
         muted
         playsInline
+        poster={poster}
         preload={priority === "high" ? "metadata" : "none"}
+        ref={videoRef}
       >
         {shouldLoad && <source src={src} type="video/mp4" />}
       </video>

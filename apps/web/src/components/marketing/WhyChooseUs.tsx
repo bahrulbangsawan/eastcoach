@@ -99,8 +99,8 @@ export function WhyChooseUs() {
           </div>
 
           {/* Right - Video */}
-          <div className="relative hidden lg:block">
-            <div className="h-[520px] w-full overflow-hidden rounded-2xl bg-dark">
+          <div className="relative order-first lg:order-last">
+            <div className="h-[280px] w-full overflow-hidden rounded-2xl bg-dark sm:h-[360px] lg:h-[520px]">
               <LazyVideo
                 className="h-full w-full"
                 priority="low"
@@ -108,8 +108,8 @@ export function WhyChooseUs() {
               />
             </div>
             {/* Decorative arrow */}
-            <div className="absolute top-4 right-4 flex size-12 items-center justify-center rounded-lg bg-dark">
-              <ArrowUpRight className="size-5 rotate-90 text-lime" />
+            <div className="absolute top-4 right-4 flex size-10 items-center justify-center rounded-lg bg-dark lg:size-12">
+              <ArrowUpRight className="size-4 rotate-90 text-lime lg:size-5" />
             </div>
           </div>
         </div>
